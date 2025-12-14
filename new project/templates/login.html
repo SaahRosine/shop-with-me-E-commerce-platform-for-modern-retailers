@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - UserSystem</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 350px; }
+        h2 { text-align: center; color: #333; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="email"], input[type="password"], input[type="text"] { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #45a049; }
+        .message { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>User System Login</h2>
+
+        {% if error %}<div class="message error">{{ error }}</div>{% endif %}
+        {% if success_message %}<div class="message success">{{ success_message }}</div>{% endif %}
+
+        {% if otp_mode %}
+            <form action="{{ url_for('verify_otp') }}" method="POST">
+                <div class="form-group">
+                    <label for="otp">OTP Code (Check Server Console):</label>
+                    <input type="text" id="otp" name="otp_code" required autofocus>
+                </div>
+                <button type="submit">Verify OTP</button>
+            </form>
+            {% endif %}
+        
+            <form action="{{ url_for('request_otp') }}" method="POST">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="test.newbie@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password (Optional/Enrollment Check):</label>
+                    <input type="password" id="password" name="password" value="SecurePassword123">
+                </div>
+                <button type="submit">Login & Request OTP</button>
+            </form>
+        
+    </div>
+</body>
+</html>

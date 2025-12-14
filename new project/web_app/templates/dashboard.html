@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #e6f7ff; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .dashboard-container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); width: 400px; }
+        h2 { text-align: center; color: #007bff; margin-bottom: 20px; }
+        .profile-info p { margin: 10px 0; font-size: 16px; }
+        .storage-bar { width: 100%; background-color: #f3f3f3; border-radius: 5px; overflow: hidden; margin-top: 15px; }
+        .storage-fill { height: 25px; background-color: #00bcd4; text-align: center; line-height: 25px; color: white; font-weight: bold; transition: width 1s; }
+        .storage-details { display: flex; justify-content: space-between; margin-top: 5px; font-size: 14px; color: #666; }
+        .logout-btn { display: block; margin-top: 20px; padding: 10px; background-color: #dc3545; color: white; text-align: center; border-radius: 4px; text-decoration: none; }
+        .logout-btn:hover { background-color: #c82333; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h2>☁️ User Storage Dashboard ☁️</h2>
+        
+        <div class="profile-info">
+            <p><strong>Welcome, {{ profile.name }}!</strong></p>
+            <p>Email: {{ profile.email }}</p>
+            <p>User ID: <small>{{ profile.user_id }}</small></p>
+        </div>
+        
+        <h3>Storage Access Granted (50 GB)</h3>
+        
+        <div class="storage-bar">
+            {% set usage_percent = (profile.storage_used_bytes / profile.storage_quota_bytes) * 100 %}
+            <div class="storage-fill" style="width: {{ usage_percent | round(1) ~ '%' }};">{{ usage_percent | round(1) }}% Used</div>
+        </div>
+        
+        <div class="storage-details">
+            <span>Used: {{ (profile.storage_used_bytes / 1024 / 1024) | round(2) }} MB</span>
+            <span>Quota: {{ (profile.storage_quota_bytes / 1024 / 1024 / 1024) | round(0) }} GB</span>
+        </div>
+        
+        <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+    </div>
+</body>
+</html>
